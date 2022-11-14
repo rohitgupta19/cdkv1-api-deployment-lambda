@@ -7,7 +7,7 @@ export function getSSHKeySecret(scope: Construct, env: string) {
   let arn = `arn:aws:secretsmanager:${config.NonProd_Sydney.region}:${config.NonProd_Sydney.account}:secret:github-build-token-4j7Cc6`;
 
   if (arn === null) throw new Error('Could not find Github Token for ' + env);
-  return secretsmanager.Secret.fromSecretCompleteArn(scope, 'TennisAustraliaBuildToken', arn);
+  return secretsmanager.Secret.fromSecretCompleteArn(scope, 'github-build-token', arn);
 }
 
 export function getSecretsPolicy() {
@@ -26,7 +26,7 @@ export function getSecretsPolicy() {
   ssmAccess.addResources(
     `arn:aws:kms:${config.NonProd_Sydney.region}:${config.NonProd_Sydney.account}:key/f27e3a70-6fcd-4ea9-ba62-1730480ec36f`,
     'arn:aws:ssm:*:*:parameter/CodeBuild/Github',
-    'arn:aws:secretsmanager:*:*:secret:TennisAustraliaBuildToken*'
+    'arn:aws:secretsmanager:*:*:secret:github-build-token*'
   );
 
   return ssmAccess;
