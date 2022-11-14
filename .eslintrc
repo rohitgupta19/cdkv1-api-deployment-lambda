@@ -1,0 +1,9 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "rules": {
+    "no-console": 1,
+    "@typescript-eslint/no-unused-vars": ["error"]
+  }
+}

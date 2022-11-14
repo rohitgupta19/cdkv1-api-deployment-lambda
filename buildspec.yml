@@ -1,0 +1,24 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 14
+    commands:
+      - printenv
+      - npm install
+      - ACC=$(aws sts get-caller-identity | jq -r '.Account')
+      - echo Logging in to $AWS_REGION $ACC
+  build:
+    commands:
+      - npm run build
+
+      - ((npx cdk diff --app "node bin/pipeline-builder.js") ||
+        (npx cdk deploy --app "node bin/pipeline-builder.js" --require-approval never))
+
+      - |
+        if [ "$ACC" = "731852885635" ] ; then
+          echo deploying Non-PROD CF Stack
+          npx cdk diff TAScoringPipelines || true
+          npx cdk deploy TAScoringPipelines --require-approval never
+        fi
