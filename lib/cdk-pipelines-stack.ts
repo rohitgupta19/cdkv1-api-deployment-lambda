@@ -80,7 +80,7 @@ export class CDKPipelinesStack extends cdk.Stack {
             new pipeActions.GitHubSourceAction({
               actionName: 'Source',
               oauthToken: githubToken.secretValue,
-              repo: scoringApplication.repo,
+              repo: cdkLambdaApplication.repo,
               owner: 'rohitgupta19',
               branch: branch.valueAsString,
               output: sourceArtifact
@@ -108,7 +108,7 @@ export class CDKPipelinesStack extends cdk.Stack {
           actions: [
             new pipeActions.CloudFormationCreateReplaceChangeSetAction({
               actionName: 'CreateDeploy',
-              stackName: scoringApplication.stackName + '-' + stage,
+              stackName: cdkLambdaApplication.stackName + '-' + stage,
               templatePath: new ArtifactPath(
                 buildArtifact,
                 '.serverless/cloudformation-template-update-stack.json'
@@ -131,7 +131,7 @@ export class CDKPipelinesStack extends cdk.Stack {
           actions: [
             new pipeActions.CloudFormationExecuteChangeSetAction({
               actionName: 'Deploy',
-              stackName: scoringApplication.stackName + '-' + stage,
+              stackName: cdkLambdaApplication.stackName + '-' + stage,
               changeSetName: stage + '-deployment',
               output: deployArtifact
             })
