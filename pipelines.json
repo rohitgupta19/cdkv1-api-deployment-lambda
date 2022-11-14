@@ -1,7 +1,7 @@
 [
   {
-    "name": "cdkv1-api-deployment-lambda",
-    "repo": "cdkv1-api-deployment-lambda",
-    "stackName": "cdkv1-api-deployment-lambda"
+    "name": "aws-serverless-typescript-api",
+    "repo": "aws-serverless-typescript-api",
+    "stackName": "aws-serverless-typescript-app"
   }
 ]
