@@ -28,9 +28,9 @@ export class PipelineBuilder extends cdk.Stack {
     const buildPol = getBuildPolicy(this);
     if (codebuildProject.role) buildPol.attachToRole(codebuildProject.role);
 
-    // Configure the branch of scoring-pipelines repo which should invoke on commit and deploy the CF Stack
+    // Configure the branch of cdkLambdaApplication-pipelines repo which should invoke on commit and deploy the CF Stack
     const branch = new CfnParameter(this, 'pipelineBranch', {
-      default: 'develop'
+      default: 'master'
     });
 
     const pipeline = new codepipeline.Pipeline(this, 'pipeline-builder', {
@@ -86,8 +86,8 @@ const getBuildPolicy = (scope: Construct) => {
     ['s3:*'],
     [
       'arn:aws:s3:::cdktoolkit*',
-      'arn:aws:s3:::scoring-piplines-artifacts*',
-      'arn:aws:s3:::scoring-piplines-artifacts-test*'
+      'arn:aws:s3:::cdk-lambda-piplines-artifacts*',
+      'arn:aws:s3:::cdk-lambda-piplines-artifacts-test*'
     ]
   );
 

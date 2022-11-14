@@ -25,7 +25,7 @@ const getStages = (stageGroup: Stages) => {
 
 const stageBranchMapping: { [k: string]: string } = require('../stages').branchMapping;
 
-const scoringApplications: { [k: string]: string }[] = require('../pipelines');
+const cdkLambdaApplications: { [k: string]: string }[] = require('../pipelines');
 
 export interface PipelinesProps extends cdk.StackProps {
   stages: Stages;
@@ -43,16 +43,16 @@ export class CDKPipelinesStack extends cdk.Stack {
 
     const artifactBucket = new Bucket(this, 'PipelinesArtifactBucket', {
       bucketName:
-        'scoring-piplines-artifacts-' + props.stages.toLowerCase() + this.account.substr(0, 4),
+        'cdk-lambda-piplines-artifacts-' + props.stages.toLowerCase() + this.account.substr(0, 4),
       encryption: BucketEncryption.S3_MANAGED
     });
 
     const buildPol = getBuildPolicy(this);
     const deployRole = getDeployRole(this);
 
-    for (const scoringApplication of scoringApplications) {
-      const codebuildProject = new codebuild.PipelineProject(this, scoringApplication.name, {
-        projectName: scoringApplication.name,
+    for (const cdkLambdaApplication of cdkLambdaApplications) {
+      const codebuildProject = new codebuild.PipelineProject(this, cdkLambdaApplication.name, {
+        projectName: cdkLambdaApplication.name,
         environment: {
           buildImage: codebuild.LinuxBuildImage.STANDARD_5_0
         }
@@ -61,15 +61,15 @@ export class CDKPipelinesStack extends cdk.Stack {
       if (codebuildProject.role) buildPol.attachToRole(codebuildProject.role);
 
       for (const stage of getStages(props.stages)) {
-        const branch = new CfnParameter(this, scoringApplication.name + stage + 'Branch', {
+        const branch = new CfnParameter(this, cdkLambdaApplication.name + stage + 'Branch', {
           default: stageBranchMapping[stage]
         });
 
         const pipeline = new codepipeline.Pipeline(
           this,
-          stage + '-pipeline-' + scoringApplication.name,
+          stage + '-pipeline-' + cdkLambdaApplication.name,
           {
-            pipelineName: stage + '-' + scoringApplication.name,
+            pipelineName: stage + '-' + cdkLambdaApplication.name,
             artifactBucket: artifactBucket
           }
         );
