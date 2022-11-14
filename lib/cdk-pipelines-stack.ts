@@ -31,7 +31,7 @@ export interface PipelinesProps extends cdk.StackProps {
   stages: Stages;
 }
 
-export class TaPipelinesStack extends cdk.Stack {
+export class CDKPipelinesStack extends cdk.Stack {
   constructor(scope: cdk.App, id: string, props: PipelinesProps) {
     super(scope, id, props);
 

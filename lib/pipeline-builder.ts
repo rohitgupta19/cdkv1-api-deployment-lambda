@@ -7,7 +7,7 @@ import { Policy } from '@aws-cdk/aws-iam';
 import { CfnParameter, Construct } from '@aws-cdk/core';
 
 import { getStatement } from './createPolicyStatement';
-import { PipelinesProps } from './ta-pipelines-stack';
+import { PipelinesProps } from './cdk-pipelines-stack';
 
 export class PipelineBuilder extends cdk.Stack {
   constructor(scope: cdk.App, id: string, props: PipelinesProps) {
@@ -94,15 +94,15 @@ const getBuildPolicy = (scope: Construct) => {
   const LambdaHook = getStatement(
     ['lambda:*', 'sns:*'],
     [
-      'arn:aws:lambda:*:*:function:TAScoringPipelines-*',
+      'arn:aws:lambda:*:*:function:CDKLambdaDeployPipeline-*',
       'arn:aws:lambda:*:*:function:PipelineBuilder-*',
-      'arn:aws:sns:*:*:TAScoringPipelines-*'
+      'arn:aws:sns:*:*:CDKLambdaDeployPipeline-*'
     ]
   );
 
   const IAM = getStatement(
     ['iam:*'],
-    ['arn:aws:iam::*:role/TAScoringPipelines-*', 'arn:aws:iam::*:role/PipelineBuilder-*']
+    ['arn:aws:iam::*:role/CDKLambdaDeployPipeline-*', 'arn:aws:iam::*:role/PipelineBuilder-*']
   );
 
   const rolePol = new Policy(scope, 'BuildPolicy');

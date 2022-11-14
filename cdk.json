@@ -1,3 +1,3 @@
 {
-  "app": "node bin/ta-pipelines.js"
+  "app": "node bin/cdk-pipelines.js"
 }

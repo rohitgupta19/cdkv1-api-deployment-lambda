@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 import cdk = require('@aws-cdk/core');
-import { TaPipelinesStack, Stages } from '../lib/ta-pipelines-stack';
+import { CDKPipelinesStack, Stages } from '../lib/cdk-pipelines-stack';
 import * as config from '../environment.json';
 
 const app = new cdk.App();
 
-new TaPipelinesStack(app, 'TAScoringPipelines', {
+new CDKPipelinesStack(app, 'CDKLambdaDeployPipeline', {
   env: config.NonProd_Sydney,
   stages: Stages.Testing
 });

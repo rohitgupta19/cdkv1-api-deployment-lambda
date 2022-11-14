@@ -19,6 +19,6 @@ phases:
       - |
         if [ "$ACC" = "731852885635" ] ; then
           echo deploying Non-PROD CF Stack
-          npx cdk diff TAScoringPipelines || true
-          npx cdk deploy TAScoringPipelines --require-approval never
+          npx cdk diff CDKLambdaDeployPipeline || true
+          npx cdk deploy CDKLambdaDeployPipeline --require-approval never
         fi

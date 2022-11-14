@@ -8,14 +8,14 @@
    a. ao-scoring
 
 3. stages and branch mapping for all 3 projects are defined in stages.json
-4. Entry point for the project is ta-pipelines.ts
+4. Entry point for the project is cdk-pipelines.ts
 5. There are 4 stages defined in the project and for each stage we will be deploying to below environments :
 
    Testing: ["dev", "dev3", "dev2", "sit", "fnc", "perf", "uat"],
 
 6. If any new environment to be added or removed from the list for a particular stage, above variable needs to be updated along with the mapping in stages.json
 7. If only the branch mapping for the environment needs to be changes in future only stages.json needs to be updated and redeploy the stack.
-8. As of now only Non-Prod stack (TAScoringPipelines) is enabled and rest of them are commented in ta-pipelines.ts to ensure only that stack is deployed.
+8. As of now only Non-Prod stack (CDKLambdaDeployPipeline) is enabled and rest of them are commented in cdk-pipelines.ts to ensure only that stack is deployed.
 
 # Pre-Requisite before deploying the stack
 
@@ -34,7 +34,7 @@ There are 2 option for deployment.
 
 a. Deployment of cloudformation stack along with any resource changes (Not to be used only for branch mapping changes, choose option b) :
 
-- run `npx cdk diff TAScoringPipelines || true`
+- run `npx cdk diff CDKLambdaDeployPipeline || true`
 
 Above command will display all the difference between the current stack and deployed stack.
 It will also list all the Iam related changes
@@ -43,7 +43,7 @@ Here is an Example of current value of paramter aoscoringdevBranch changing from
 
 `[~] Parameter ao-scoringdevBranch aoscoringdevBranch: {"Type":"String","Default":"master"} to {"Type":"String","Default":"develop"}`
 
-- run `npx cdk deploy TAScoringPipelines --require-approval never`
+- run `npx cdk deploy CDKLambdaDeployPipeline --require-approval never`
 
 Will re-deploy the cloudformation changes and also re-trigger the pipelines if there are any changes identified .
 
@@ -51,11 +51,11 @@ You can check the console logs to track the progress of deployment.
 
 b. Deployment of only branch mapping changes :
 
-- run `npx cdk deploy TAScoringPipelines --parameters parameter-name=value --require-approval never`
+- run `npx cdk deploy CDKLambdaDeployPipeline --parameters parameter-name=value --require-approval never`
 
 Example :
 
-- `npx cdk deploy TAScoringPipelines --parameters aoscoringdevBranch=feature/AODS1234 --require-approval never`
+- `npx cdk deploy CDKLambdaDeployPipeline --parameters aoscoringdevBranch=feature/AODS1234 --require-approval never`
 
 You can find list of current parameter mapping in the cloudformation stack under Parameters tab.
 
@@ -63,7 +63,7 @@ This will only update the stack and the branch mapping in codepipeline but not t
 
 In order to update the mapping for multiple branches we need to pass multiple --parameters for each key value pair
 
-`npx cdk deploy TAScoringPipelines --parameters parameter-name1=value1 --parameters parameter-name2=value2 --require-approval never`
+`npx cdk deploy CDKLambdaDeployPipeline --parameters parameter-name1=value1 --parameters parameter-name2=value2 --require-approval never`
 
 # TODO
 

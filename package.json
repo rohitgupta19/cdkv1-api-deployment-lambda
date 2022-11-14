@@ -2,7 +2,7 @@
   "name": "ta-pipelines",
   "version": "0.1.0",
   "bin": {
-    "ta-pipelines": "bin/ta-pipelines.js"
+    "cdk-pipelines": "bin/cdk-pipelines.js"
   },
   "scripts": {
     "build": "tsc --build --clean && tsc",

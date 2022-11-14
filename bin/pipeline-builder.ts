@@ -2,7 +2,7 @@
 import cdk = require('@aws-cdk/core');
 import { PipelineBuilder } from '../lib/pipeline-builder';
 import * as config from '../environment.json';
-import { Stages } from '../lib/ta-pipelines-stack';
+import { Stages } from '../lib/cdk-pipelines-stack';
 
 const app = new cdk.App();
 const AWS_ACCOUNT = process.env.CDK_DEFAULT_ACCOUNT;
