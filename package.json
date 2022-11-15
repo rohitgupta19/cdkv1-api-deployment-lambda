@@ -1,5 +1,5 @@
 {
-  "name": "ta-pipelines",
+  "name": "cdk-pipelines",
   "version": "0.1.0",
   "bin": {
     "cdk-pipelines": "bin/cdk-pipelines.js"

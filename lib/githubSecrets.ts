@@ -4,6 +4,8 @@ import { PolicyStatement, Effect } from '@aws-cdk/aws-iam';
 import * as config from '../environment.json';
 
 export function getSSHKeySecret(scope: Construct, env: string) {
+  // TODO : Read this from secret manager api by just using the secret name rather than full url
+  // TODO: Update account and account from .env files and configure the same in repository settings
   let arn = `arn:aws:secretsmanager:${config.NonProd_Sydney.region}:${config.NonProd_Sydney.account}:secret:github-build-token-4j7Cc6`;
 
   if (arn === null) throw new Error('Could not find Github Token for ' + env);
